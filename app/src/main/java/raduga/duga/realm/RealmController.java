@@ -13,7 +13,7 @@ import raduga.duga.model.BarCode;
  */
 public class RealmController {
 
-        private static RealmController instance;
+       /* private static RealmController instance;
         private final Realm realm;
 
         public RealmController(Application application) {
@@ -95,5 +95,5 @@ public class RealmController {
                     .contains("title", "Realm")
                     .findAll();
 
-        }
+        }*/
 }

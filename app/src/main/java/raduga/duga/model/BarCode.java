@@ -7,17 +7,27 @@ import io.realm.annotations.PrimaryKey;
  * Created by Teacher on 15.09.2016.
  */
 public class BarCode extends RealmObject {
-
     @PrimaryKey
     private int     eventId;
+
     private String  eventName;
     private String  dateBegin;
     private String  dateEnd;
-    private Boolean letIn;
-    private Boolean letOut;
+    private int letIn;
+    private int letOut;
     private String  lastDate;
     private int     lastId;
     private String  denidName;
+
+    public BarCode(int       _eventId,
+                   String    _eventName,
+                   String    _dateBegin,
+                   String    _dateEnd,
+                   int       _letIn,
+                   int       _letOut,
+                   String    _lastDate,
+                   int       _lastId,
+                   String    _denidName){}
 
     public int getEventId(){
         return eventId;
@@ -35,11 +45,11 @@ public class BarCode extends RealmObject {
         return dateEnd;
     }
 
-    public Boolean getLetIn() {
+    public int getLetIn() {
         return letIn;
     }
 
-    public Boolean getLetOut() {
+    public int getLetOut() {
         return letOut;
     }
 
@@ -79,11 +89,11 @@ public class BarCode extends RealmObject {
         this.lastId = lastId;
     }
 
-    public void setLetIn(Boolean letIn) {
+    public void setLetIn(int letIn) {
         this.letIn = letIn;
     }
 
-    public void setLetOut(Boolean letOut) {
+    public void setLetOut(int letOut) {
         this.letOut = letOut;
     }
 

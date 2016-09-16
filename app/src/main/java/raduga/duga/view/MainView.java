@@ -1,9 +1,11 @@
-package raduga.duga;
+package raduga.duga.view;
 
-import com.google.zxing.integration.android.IntentIntegrator;
+import android.content.Context;
+
 
 import net.grandcentrix.thirtyinch.TiView;
 import net.grandcentrix.thirtyinch.callonmainthread.CallOnMainThread;
+
 
 /**
  * Created by Shcherbakov on 14.09.2016.
@@ -11,5 +13,7 @@ import net.grandcentrix.thirtyinch.callonmainthread.CallOnMainThread;
 public interface MainView extends TiView {
 
     @CallOnMainThread
-    void showCamera();
+    void showScanner();
+
+
 }
