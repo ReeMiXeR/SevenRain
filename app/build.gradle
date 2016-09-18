@@ -18,6 +18,19 @@ android {
         }
     }
 }
+
+apply plugin: 'com.android.application' // or apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+    }
+}
+
 repositories {
     jcenter()
 }
@@ -47,4 +60,10 @@ dependencies {
 
     // test extension
     testCompile "net.grandcentrix.thirtyinch:thirtyinch-test:$thirtyinchVersion"
+}
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }

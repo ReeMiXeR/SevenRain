@@ -3,7 +3,7 @@ package raduga.duga.ui.activity;
 
 import android.support.annotation.NonNull;
 import android.os.Bundle;
-
+import android.widget.TextView;
 
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -17,6 +17,8 @@ import raduga.duga.R;
 
 
 public class MainActivity extends TiActivity<MainPresenter, MainView> implements MainView {
+
+
 
     @NonNull
     @Override
