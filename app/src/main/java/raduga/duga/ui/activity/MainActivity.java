@@ -24,6 +24,8 @@ public class MainActivity extends TiActivity<MainPresenter, MainView> implements
         return new MainPresenter();
     }
 
+
+
     @Override
     public void showScanner() {
         new IntentIntegrator(this)

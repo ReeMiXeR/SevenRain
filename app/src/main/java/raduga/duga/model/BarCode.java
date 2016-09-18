@@ -19,15 +19,27 @@ public class BarCode extends RealmObject {
     private int     lastId;
     private String  denidName;
 
-    public BarCode(int       _eventId,
-                   String    _eventName,
-                   String    _dateBegin,
-                   String    _dateEnd,
-                   int       _letIn,
-                   int       _letOut,
-                   String    _lastDate,
-                   int       _lastId,
-                   String    _denidName){}
+    public BarCode(){}
+
+    /*public void setAll(int       _eventId,
+                       String    _eventName,
+                       String    _dateBegin,
+                       String    _dateEnd,
+                       int       _letIn,
+                       int       _letOut,
+                       String    _lastDate,
+                       int       _lastId,
+                       String    _denidName){
+        this.eventId = _eventId;
+        this.eventName = _eventName;
+        this.dateBegin = _dateBegin;
+        this.dateEnd = _dateEnd;
+        this.letIn = _letIn;
+        this.letOut = _letOut;
+        this.lastDate = _lastDate;
+        this.lastId = _lastId;
+        this.denidName = _denidName;
+    }*/
 
     public int getEventId(){
         return eventId;
