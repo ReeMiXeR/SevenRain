@@ -4,7 +4,6 @@ package raduga.duga.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -30,13 +29,14 @@ public class MainActivity extends TiActivity<MainPresenter, MainView> implements
     @Override
     public void showScanner() {
 
-        new IntentIntegrator(this)
-                .setCaptureActivity(OrientationActivity.class)
-                .setOrientationLocked(false)
-                .setPrompt("Сканируйте билет")
-                .initiateScan();
-        Log.e("qwe", "Remake");
+//        new IntentIntegrator(this)
+//                .setCaptureActivity(OrientationActivity.class)
+//                .setOrientationLocked(false)
+//                .setPrompt("Сканируйте билет")
+//                .initiateScan();
+//        Log.e("qwe", "Remake");
 
+        startActivity(new Intent(this, OrientationActivity.class));
 
     }
 

@@ -14,6 +14,7 @@ import net.grandcentrix.thirtyinch.TiActivity;
 
 import io.realm.Realm;
 import raduga.duga.ActivityResultEvent;
+import raduga.duga.DCaptureManager;
 import raduga.duga.R;
 import raduga.duga.model.BarCode;
 import raduga.duga.presenter.OrientationPresenter;
@@ -67,8 +68,6 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 
         mRealm = Realm.getInstance(this);
 
-
-
 //        mRealm.beginTransaction();
 //        BarCode barCode = mRealm.createObject(BarCode.class);
 //        barCode.setEventId(14883333);
@@ -82,7 +81,7 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 
         barcodeScannerView = initializeContent();
 
-        capture = new CaptureManager(this, barcodeScannerView);
+        capture = new DCaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
 
@@ -91,12 +90,9 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
         Intent intent = new Intent();
         intent.putExtra("barCode", 14881488);
 
-        text.setOnClickListener(v -> onActivityResult(1,2,intent));
+        text.setOnClickListener(v -> onActivityResult(1, 2, intent));
 
         barCodeView = (TextView) findViewById(R.id.barCode);
-
-
-
 
     }
 
@@ -139,7 +135,7 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 
     protected DecoratedBarcodeView initializeContent() {
         setContentView(R.layout.orientation_activity);
-        return (DecoratedBarcodeView)findViewById(R.id.zxing_barcode_scanner);
+        return (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
     }
 
 
