@@ -1,8 +1,5 @@
 package raduga.duga.view;
 
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
-
 import net.grandcentrix.thirtyinch.TiView;
 
 import raduga.duga.ActivityResultEvent;
@@ -17,5 +14,7 @@ public interface OrientationView extends TiView {
     Observable<String> barCode();
 
     Observable<ActivityResultEvent> activityResult();
+
+    void setText(String text);
 
 }

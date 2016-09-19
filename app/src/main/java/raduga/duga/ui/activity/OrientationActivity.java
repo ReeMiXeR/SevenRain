@@ -6,22 +6,13 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
-import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
-import com.journeyapps.barcodescanner.CaptureActivity;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 import net.grandcentrix.thirtyinch.TiActivity;
-import net.grandcentrix.thirtyinch.rx.RxTiPresenterSubscriptionHandler;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import raduga.duga.ActivityResultEvent;
 import raduga.duga.R;
 import raduga.duga.model.BarCode;
@@ -29,7 +20,6 @@ import raduga.duga.presenter.OrientationPresenter;
 import raduga.duga.view.OrientationView;
 import rx.Observable;
 import rx.Subscriber;
-import rx.plugins.RxJavaObservableExecutionHook;
 import rx.subjects.BehaviorSubject;
 
 /**
@@ -67,11 +57,15 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
     }
 
     @Override
+    public void setText(String text) {
+        barCodeView.setText(text);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mRealm = Realm.getInstance(this);
-
 
 
 
@@ -99,6 +93,7 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 
         text.setOnClickListener(v -> onActivityResult(1,2,intent));
 
+        barCodeView = (TextView) findViewById(R.id.barCode);
 
 
 
@@ -150,25 +145,21 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        Log.e("e", "start");
-        super.onActivityResult(requestCode, resultCode, data);
-        activityResultSubject.onNext(ActivityResultEvent.create(requestCode, resultCode, data));
-
-        if(result != null) {
-            if(result.getContents() == null) {
-                Log.d("MainActivity", "Error");
-                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
-
-            } else {
-
-
-                Log.d("MainActivity", "Scanned");
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                barCodeView = (TextView) findViewById(R.id.barCode);
-                barCodeView.setText(result.getContents());
-
-
+//        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+//        Log.e("e", "ActivityResult - ");
+//        super.onActivityResult(requestCode, resultCode, data);
+//        activityResultSubject.onNext(ActivityResultEvent.create(requestCode, resultCode, data));
+//
+//        if(result != null) {
+//            if(result.getContents() == null) {
+//                Log.d("MainActivity", "Error");
+//                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
+//
+//            } else {
+//
+//
+//                Log.d("MainActivity", "Scanned");
+//                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
 //                mRealm.beginTransaction();
 //                RealmResults<BarCode> code = mRealm.where(BarCode.class).equalTo("eventName", result.getContents()).findAll();
@@ -177,10 +168,10 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 //                    Toast.makeText(this, "Greate! Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 //                }
 //                mRealm.commitTransaction();
-            }
-        } else {
-            // This is important, otherwise the result will not be passed to the fragment
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+//            }
+//        } else {
+//            // This is important, otherwise the result will not be passed to the fragment
+//            super.onActivityResult(requestCode, resultCode, data);
+//        }
     }
 }
