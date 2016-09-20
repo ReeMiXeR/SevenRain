@@ -1,5 +1,7 @@
 package raduga.duga.ui.activity;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,16 +14,14 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
+import org.w3c.dom.Text;
+
 import io.realm.Realm;
-import raduga.duga.ActivityResultEvent;
 import raduga.duga.DCaptureManager;
 import raduga.duga.R;
 import raduga.duga.model.BarCode;
 import raduga.duga.presenter.OrientationPresenter;
 import raduga.duga.view.OrientationView;
-import rx.Observable;
-import rx.Subscriber;
-import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Shcherbakov on 16.09.2016.
@@ -31,24 +31,29 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
     TextView barCodeView;
-    private final BehaviorSubject<ActivityResultEvent> activityResultSubject = BehaviorSubject.create();
+    TextView eventName;
+    TextView dateBegin;
+    TextView dateEnd;
+
 
     @Override
-    public Observable<String> barCode() {
-        return Observable.create(
-                new Observable.OnSubscribe<String>() {
-                    @Override
-                    public void call(Subscriber<? super String> sub) {
-                        sub.onNext("Hello, world!");
-                        sub.onCompleted();
-                    }
-                }
-        );
+    public TextView getBarCodeView() {
+        return (TextView) findViewById(R.id.barCode);
     }
 
     @Override
-    public Observable<ActivityResultEvent> activityResult() {
-        return activityResultSubject.asObservable();
+    public Context getApp() {
+        return getBaseContext();
+    }
+
+    @Override
+    public void setBarCode(BarCode code) {
+        eventName = (TextView) findViewById(R.id.eventName);
+        dateBegin = (TextView) findViewById(R.id.dateBegin);
+        dateEnd = (TextView) findViewById(R.id.dateEnd);
+        eventName.setText(code.getEventName());
+        dateBegin.setText(code.getDateBegin());
+        dateEnd.setText(code.getDateEnd());
     }
 
     @NonNull
@@ -57,43 +62,35 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
         return new OrientationPresenter();
     }
 
-    @Override
-    public void setText(String text) {
-        barCodeView.setText(text);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRealm = Realm.getInstance(this);
 
+
+        barCodeView = (TextView) findViewById(R.id.barCode);
+
+
+//        mRealm = Realm.getInstance(this);
+//        Log.e("ee", mRealm.getTable(BarCode.class).toString());
 //        mRealm.beginTransaction();
 //        BarCode barCode = mRealm.createObject(BarCode.class);
-//        barCode.setEventId(14883333);
+//        barCode.setEventId("3330004637115");
 //        barCode.setEventName("Zopa i moroz");
 //        barCode.setDateBegin("14-30 12-12-2016");
 //        barCode.setDateEnd("18-00 12-12-2016");
 //        barCode.setLetIn(1);
 //        mRealm.commitTransaction();
+//        Log.e("ee", mRealm.getTable(BarCode.class).toString());
 
-        Log.e("ee", mRealm.getTable(BarCode.class).toString());
 
         barcodeScannerView = initializeContent();
 
         capture = new DCaptureManager(this, barcodeScannerView);
-        capture.initializeFromIntent(getIntent(), savedInstanceState);
+
+        //capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
-
-        TextView text = (TextView) findViewById(R.id.eventId);
-
-        Intent intent = new Intent();
-        intent.putExtra("barCode", 14881488);
-
-        text.setOnClickListener(v -> onActivityResult(1, 2, intent));
-
-        barCodeView = (TextView) findViewById(R.id.barCode);
-
     }
 
     @Override
@@ -138,36 +135,4 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
         return (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//        Log.e("e", "ActivityResult - ");
-//        super.onActivityResult(requestCode, resultCode, data);
-//        activityResultSubject.onNext(ActivityResultEvent.create(requestCode, resultCode, data));
-//
-//        if(result != null) {
-//            if(result.getContents() == null) {
-//                Log.d("MainActivity", "Error");
-//                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
-//
-//            } else {
-//
-//
-//                Log.d("MainActivity", "Scanned");
-//                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-//
-//                mRealm.beginTransaction();
-//                RealmResults<BarCode> code = mRealm.where(BarCode.class).equalTo("eventName", result.getContents()).findAll();
-//                if (!code.isEmpty()){
-//                    BarCode barCode = code.get(0);
-//                    Toast.makeText(this, "Greate! Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-//                }
-//                mRealm.commitTransaction();
-//            }
-//        } else {
-//            // This is important, otherwise the result will not be passed to the fragment
-//            super.onActivityResult(requestCode, resultCode, data);
-//        }
-    }
 }

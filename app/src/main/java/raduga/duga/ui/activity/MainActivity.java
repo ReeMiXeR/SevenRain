@@ -18,8 +18,6 @@ import rx.subjects.BehaviorSubject;
 
 public class MainActivity extends TiActivity<MainPresenter, MainView> implements MainView {
 
-    public static BehaviorSubject<String> activityResultSubject = BehaviorSubject.create();
-
     @NonNull
     @Override
     public MainPresenter providePresenter() {
@@ -28,16 +26,7 @@ public class MainActivity extends TiActivity<MainPresenter, MainView> implements
 
     @Override
     public void showScanner() {
-
-//        new IntentIntegrator(this)
-//                .setCaptureActivity(OrientationActivity.class)
-//                .setOrientationLocked(false)
-//                .setPrompt("Сканируйте билет")
-//                .initiateScan();
-//        Log.e("qwe", "Remake");
-
         startActivity(new Intent(this, OrientationActivity.class));
-
     }
 
     @Override
@@ -47,12 +36,4 @@ public class MainActivity extends TiActivity<MainPresenter, MainView> implements
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-
-        activityResultSubject.onNext(result.toString());
-
-    }
 }

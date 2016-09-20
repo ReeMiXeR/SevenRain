@@ -1,6 +1,8 @@
 package raduga.duga;
 
 import android.app.Activity;
+import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.ResultPoint;
@@ -16,20 +18,32 @@ import java.util.List;
 public class DCaptureManager extends CaptureManager {
     DecoratedBarcodeView mBarcodeView;
     Activity mActivity;
+    TextView barCodeView;
+    String barCode;
 
     public DCaptureManager(Activity activity, DecoratedBarcodeView barcodeView) {
         super(activity, barcodeView);
 
-        mBarcodeView = barcodeView;
         mActivity = activity;
+        mBarcodeView = barcodeView;
+
     }
+
 
     @Override
     public void decode() {
-        mBarcodeView.decodeSingle(new BarcodeCallback() {
+        mBarcodeView.decodeContinuous(new BarcodeCallback() {
             @Override
             public void barcodeResult(BarcodeResult result) {
-                Toast.makeText(mActivity, result.toString(), Toast.LENGTH_SHORT).show();
+                barCodeView = (TextView) mActivity.findViewById(R.id.barCode);
+
+                if(!(barCodeView.getText().toString().equals(result.toString()))) {
+                    barCode = result.toString();
+                    Log.e("barcode", result.toString());
+
+                    barCodeView.setText(result.toString());
+                }
+                //Toast.makeText(mActivity, result.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -37,5 +51,6 @@ public class DCaptureManager extends CaptureManager {
 
             }
         });
+        //mBarcodeView.decodeSingle();
     }
 }

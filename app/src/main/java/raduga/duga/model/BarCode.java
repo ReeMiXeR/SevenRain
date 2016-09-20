@@ -8,7 +8,7 @@ import io.realm.annotations.PrimaryKey;
  */
 public class BarCode extends RealmObject {
     @PrimaryKey
-    private int     eventId;
+    private String     eventId;
 
     private String  eventName;
     private String  dateBegin;
@@ -41,7 +41,7 @@ public class BarCode extends RealmObject {
         this.denidName = _denidName;
     }*/
 
-    public int getEventId(){
+    public String getEventId(){
         return eventId;
     }
 
@@ -77,7 +77,7 @@ public class BarCode extends RealmObject {
         return denidName;
     }
 
-    public void setEventId(int eventId) {
+    public void setEventId(String eventId) {
         this.eventId = eventId;
     }
 

@@ -2,12 +2,18 @@ package raduga.duga.presenter;
 
 import android.util.Log;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
+
 import net.grandcentrix.thirtyinch.TiPresenter;
 import net.grandcentrix.thirtyinch.rx.RxTiPresenterSubscriptionHandler;
 
 import io.realm.Realm;
+import raduga.duga.model.BarCode;
+import raduga.duga.realm.RealmController;
 import raduga.duga.ui.activity.MainActivity;
 import raduga.duga.view.OrientationView;
+import rx.Subscription;
 import rx.functions.Action1;
 
 /**
@@ -15,46 +21,34 @@ import rx.functions.Action1;
  */
 public class OrientationPresenter extends TiPresenter<OrientationView>  {
     private RxTiPresenterSubscriptionHandler rxSubscriptionHelper = new RxTiPresenterSubscriptionHandler(this);
-    private Realm mRealm;
-
+    Realm realm;
 
     @Override
     protected void onWakeUp() {
         super.onWakeUp();
 
-        //mRealm = Realm.getInstance(OrientationActivity.class);
+         realm = Realm.getInstance(getView().getApp());
 
-        MainActivity.activityResultSubject
-                .doOnError(new Action1<Throwable>() {
+        Subscription subscription = RxTextView.afterTextChangeEvents(
+                getView().getBarCodeView())
+                .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
                     @Override
-                    public void call(Throwable throwable) {
-
+                    public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+                            BarCode code = realm.where(BarCode.class).equalTo(
+                                    "eventId",
+                                    getView().getBarCodeView().getText().toString())
+                                    .findFirst();
+                            if(code != null) {
+                                getView().setBarCode(code);
+                            }
                     }
-                })
-                .subscribe(new Action1<String>() {
-            @Override
-            public void call(String s) {
-                Log.e("wqe", s);
-                getView().setText(s);
+                });
 
-            }
-        });
+    }
 
-//        getView().activityResult()
-//                .doOnError(new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//
-//                    }
-//                })
-//                .subscribe(new Action1<ActivityResultEvent>() {
-//            @Override
-//            public void call(ActivityResultEvent activityResultEvent) {
-//                Log.e("qwe", activityResultEvent.toString());
-//                getView().setText(activityResultEvent.toString());
-//
-//            }
-//        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
     }
 }
