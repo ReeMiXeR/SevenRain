@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="activity-0.2.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.pascalwelsch.compositeandroid/activity/0.2.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.pascalwelsch.compositeandroid/activity/0.2.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pascalwelsch.compositeandroid/activity/0.2.2/7851b15ea63ac4d5cc0a0312b4ab9d6e4b197a20/activity-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

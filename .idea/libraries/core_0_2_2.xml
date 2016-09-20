@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="core-0.2.2">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.pascalwelsch.compositeandroid/core/0.2.2/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.pascalwelsch.compositeandroid/core/0.2.2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pascalwelsch.compositeandroid/core/0.2.2/6b5078642ac3a666cc3c9b0cc1be49079d9b13b/core-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

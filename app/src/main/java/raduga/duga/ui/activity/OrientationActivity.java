@@ -156,7 +156,7 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 //
 //                Log.d("MainActivity", "Scanned");
 //                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-
+//
 //                mRealm.beginTransaction();
 //                RealmResults<BarCode> code = mRealm.where(BarCode.class).equalTo("eventName", result.getContents()).findAll();
 //                if (!code.isEmpty()){

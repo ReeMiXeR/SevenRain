@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes {
+        debug {
+            debuggable true
+        }
+    }
 }
 
 apply plugin: 'com.android.application' // or apply plugin: 'java'
