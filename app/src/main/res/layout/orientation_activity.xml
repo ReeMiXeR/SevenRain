@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/barCode"
-            android:text="barCode"
+            android:text="Штрихкод"
             android:textSize="18sp"
             android:textColor="#000000"/>
     </LinearLayout>
@@ -38,15 +38,15 @@
         android:layout_height="0dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:layout_weight=".5">
+        android:layout_weight=".5"
+        android:layout_marginBottom="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/letIn"
-            android:text="ВХОД РАЗРЕШЕН"
+            android:text="ОТВЕТ"
             android:textSize="32sp"
-            android:textColor="#00ac25"
             android:textAllCaps="true"
             android:textStyle="bold"/>
     </LinearLayout>
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event id:"/>
+            android:text="Номер:"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,11 +82,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event name:"/>
+            android:text="Мероприятие:"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Фиксики"
             android:id="@+id/eventName"/>
 
     </LinearLayout>
@@ -98,7 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_weight=".3"
+        android:layout_weight=".4"
         android:weightSum="2">
         <LinearLayout
             android:layout_width="0dp"
@@ -108,11 +107,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date begin:"/>
+                android:text="Начало:"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="14-30 26.08.2016"
                 android:id="@+id/dateBegin"/>
 
         </LinearLayout>
@@ -125,11 +123,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date end:"/>
+                android:text="Конец:"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18-00 26.08.2016"
                 android:id="@+id/dateEnd"/>
 
         </LinearLayout>

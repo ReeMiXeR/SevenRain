@@ -1,17 +1,28 @@
 package raduga.duga.realm;
 
-import android.app.Activity;
-import android.app.Application;
-import android.app.Fragment;
-
 import io.realm.Realm;
-import io.realm.RealmResults;
-import raduga.duga.model.BarCode;
+import raduga.duga.model.BarCodeServerDB;
 
 /**
  * Created by Teacher on 15.09.2016.
  */
 public class RealmController {
+    private Realm mRealm;
+
+    RealmController(Realm realm){
+        this.mRealm = realm;
+    }
+
+    public BarCodeServerDB findBarCode(String s){
+        return mRealm.where(BarCodeServerDB.class).equalTo("eventId", s).findFirst();
+    }
+
+            public boolean hasBarCode() {
+
+            return !mRealm.allObjects(BarCodeServerDB.class).isEmpty();
+        }
+
+
 //
 //        private static RealmController instance;
 //        private final Realm realm;
@@ -64,32 +75,32 @@ public class RealmController {
 //        public void clearAll() {
 //
 //            realm.beginTransaction();
-//            realm.clear(BarCode.class);
+//            realm.clear(BarCodeServerDB.class);
 //            realm.commitTransaction();
 //        }
 //
 //        //find all objects in the Book.class
-//        public RealmResults<BarCode> getBarCode() {
+//        public RealmResults<BarCodeServerDB> getBarCode() {
 //
-//            return realm.where(BarCode.class).findAll();
+//            return realm.where(BarCodeServerDB.class).findAll();
 //        }
 //
 //        //query a single item with the given id
-//        public BarCode getBarCode(String id) {
+//        public BarCodeServerDB getBarCode(String id) {
 //
-//            return realm.where(BarCode.class).equalTo("eventId", id).findFirst();
+//            return realm.where(BarCodeServerDB.class).equalTo("eventId", id).findFirst();
 //        }
 //
 //        //check if Book.class is empty
 //        public boolean hasBarCode() {
 //
-//            return !realm.allObjects(BarCode.class).isEmpty();
+//            return !realm.allObjects(BarCodeServerDB.class).isEmpty();
 //        }
 //
 //        //query example
-//        public RealmResults<BarCode> queryedBooks() {
+//        public RealmResults<BarCodeServerDB> queryedBooks() {
 //
-//            return realm.where(BarCode.class)
+//            return realm.where(BarCodeServerDB.class)
 //                    .contains("author", "Author 0")
 //                    .or()
 //                    .contains("title", "Realm")

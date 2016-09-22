@@ -6,20 +6,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.ResultPoint;
+import com.google.zxing.client.android.BeepManager;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 import java.util.List;
+
+import javax.security.auth.Subject;
+
+import raduga.duga.model.BarCodeServerDB;
+import rx.Observable;
+import rx.subjects.PublishSubject;
+
 /**
  * Created by android_dev on 19/09/16.
  */
 public class DCaptureManager extends CaptureManager {
     DecoratedBarcodeView mBarcodeView;
     Activity mActivity;
-    TextView barCodeView;
-    String barCode;
+
+    private final PublishSubject<BarCodeServerDB> subject = PublishSubject.create();
 
     public DCaptureManager(Activity activity, DecoratedBarcodeView barcodeView) {
         super(activity, barcodeView);
@@ -29,21 +37,18 @@ public class DCaptureManager extends CaptureManager {
 
     }
 
+    public Observable<BarCodeServerDB> decodeAsObs(){
+        return subject.asObservable();
+    }
 
     @Override
     public void decode() {
         mBarcodeView.decodeContinuous(new BarcodeCallback() {
             @Override
             public void barcodeResult(BarcodeResult result) {
-                barCodeView = (TextView) mActivity.findViewById(R.id.barCode);
-
-                if(!(barCodeView.getText().toString().equals(result.toString()))) {
-                    barCode = result.toString();
-                    Log.e("barcode", result.toString());
-
-                    barCodeView.setText(result.toString());
-                }
-                //Toast.makeText(mActivity, result.toString(), Toast.LENGTH_SHORT).show();
+                BarCodeServerDB barCode = new BarCodeServerDB();
+                barCode.setEventId(result.toString());
+                subject.onNext(barCode);
             }
 
             @Override
@@ -51,6 +56,17 @@ public class DCaptureManager extends CaptureManager {
 
             }
         });
-        //mBarcodeView.decodeSingle();
+    }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }
