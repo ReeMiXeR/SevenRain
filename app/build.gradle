@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "raduga.duga"
-        minSdkVersion 17
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -22,7 +22,12 @@ android {
             debuggable true
         }
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor' // butterknife
+    }
 }
+
+
 
 apply plugin: 'com.android.application' // or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
@@ -38,6 +43,7 @@ buildscript {
 
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -45,6 +51,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.0'
 
+
+    compile 'com.jakewharton:butterknife:7.0.1'
 
     compile 'io.realm:realm-android:0.82.1'
 

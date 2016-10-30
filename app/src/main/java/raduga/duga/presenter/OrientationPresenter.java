@@ -24,14 +24,21 @@ public class OrientationPresenter extends TiPresenter<OrientationView>  {
     protected void onWakeUp() {
         super.onWakeUp();
 
+
+
         realm = Realm.getInstance(getView().getApp());
 
 
         getView().getObs()
                 .filter(obj -> !(obj.getEventId().equals(getView().getBarCodeString())))
+                
                 .subscribe(s -> {
                     barCodeServerDB = realm.where(BarCodeServerDB.class).equalTo("eventId", s.getEventId()).findFirst();
-                    if(barCodeServerDB !=null) {
+                    if(barCodeServerDB != null) {
+//                        barCodeCheckedDB = realm.where(BarCodePCheckedDB.class).equalTo("eventId", s.getEventId()).findFirst();
+//                         if(barCodeCheckedDB != null){
+//                            getView().setIncorrectBarCode(barCodeCheckedDB);
+//                         }
                         getView().setCorrectBarCode(barCodeServerDB);
                         getView().makeVibrate(200);
                     }

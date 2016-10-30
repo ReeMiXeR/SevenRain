@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.TextView;
@@ -14,6 +16,8 @@ import com.journeyapps.barcodescanner.camera.CameraSettings;
 
 import net.grandcentrix.thirtyinch.TiActivity;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import raduga.duga.DCaptureManager;
 import raduga.duga.R;
@@ -30,10 +34,20 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
     private DCaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
     private CameraSettings cameraSettings;
+
+    @Bind(R.id.eventName)
     TextView eventNameView;
+
+    @Bind(R.id.dateBegin)
     TextView dateBeginView;
+
+    @Bind(R.id.dateEnd)
     TextView dateEndView;
+
+    @Bind(R.id.barCode)
     TextView barCodeView;
+
+    @Bind(R.id.letIn)
     TextView letInView;
 
     @Override
@@ -43,8 +57,11 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 
     @Override
     public String getBarCodeString() {
-        barCodeView = (TextView) findViewById(R.id.barCode);
-        return barCodeView.getText().toString();
+        //barCodeView = (TextView) findViewById(R.id.barCode);
+        String a =  barCodeView.getText().toString();
+        if(a.equals(null))
+            return "aa";
+        return a;
     }
 
     @Override
@@ -59,12 +76,6 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 
     @Override
     public void setCorrectBarCode(BarCodeServerDB code) {
-        eventNameView = (TextView) findViewById(R.id.eventName);
-        dateBeginView = (TextView) findViewById(R.id.dateBegin);
-        dateEndView = (TextView) findViewById(R.id.dateEnd);
-        barCodeView = (TextView) findViewById(R.id.barCode);
-        letInView = (TextView) findViewById(R.id.letIn);
-
         letInView.setText("ВХОД РАЗРЕШЕН");
         letInView.setTextColor(Color.parseColor("#00ac25"));
 
@@ -76,12 +87,6 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
 
     @Override
     public void setIncorrectBarCode(BarCodeServerDB code) {
-        eventNameView = (TextView) findViewById(R.id.eventName);
-        dateBeginView = (TextView) findViewById(R.id.dateBegin);
-        dateEndView = (TextView) findViewById(R.id.dateEnd);
-        barCodeView = (TextView) findViewById(R.id.barCode);
-        letInView = (TextView) findViewById(R.id.letIn);
-
         letInView.setText("ВХОД НЕРАЗРЕШЕН");
         letInView.setTextColor(Color.parseColor("#FFEC0010"));
 
@@ -97,11 +102,11 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
         return new OrientationPresenter();
     }
 
-    private void fillDB(Realm real, String eventId){
+    private void fillDB(Realm real, String eventId, String eventName){
         real.beginTransaction();
         BarCodeServerDB barCode = real.createObject(BarCodeServerDB.class);
         barCode.setEventId(eventId);
-        barCode.setEventName("Insider");
+        barCode.setEventName(eventName);
         barCode.setDateBegin("14-30 12-12-2016");
         barCode.setDateEnd("18-00 12-12-2016");
         barCode.setLetIn(1);
@@ -114,23 +119,32 @@ public class OrientationActivity extends TiActivity<OrientationPresenter, Orient
         super.onCreate(savedInstanceState);
 
 
-
-//        Realm mRealm = Realm.getInstance(this);
-//        fillDB(mRealm, "4440000937580");
-//        fillDB(mRealm, "3330004637115");
-//        Log.e("ee", mRealm.getTable(BarCodeServerDB.class).toString());
-
-        cameraSettings = new CameraSettings();
-        cameraSettings.setScanInverted(true);
-        cameraSettings.setExposureEnabled(true);
-        cameraSettings.setFocusMode(CameraSettings.FocusMode.MACRO);
-
         barcodeScannerView = initializeContent();
 
         capture = new DCaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
+        Realm realm = Realm.getInstance(this);
 
+        try{
+        fillDB(realm, "4607167312203", "QWERTTT");
+        fillDB(realm, "555020137962", "FSDFSDF");
+        fillDB(realm, "789620137962", "GFDGDHB");
+        fillDB(realm, "978020218762", "GHKPPIB");
+        fillDB(realm, "367401377962", "IPOVCXU");
+        fillDB(realm, "870012337962", "{POBCXB");
+        fillDB(realm, "789620137962", "UOJJKLN");
+        fillDB(realm, "999999137962", "{POUYMBXQ");
+        fillDB(realm, "978132465962", "123KPMBM");
+        fillDB(realm, "972123774442", "{POUOIGDF");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+//        cameraSettings = new CameraSettings();
+//        cameraSettings.setScanInverted(true);
+//        cameraSettings.setExposureEnabled(true);
+//        cameraSettings.setFocusMode(CameraSettings.FocusMode.INFINITY);
+        ButterKnife.bind(this);
     }
 
     @Override
